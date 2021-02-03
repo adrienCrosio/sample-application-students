@@ -29,15 +29,15 @@ jobs:
       before script:
         - cd sample-application-frontend
       script:
-        - docker build diomedex/sample-app-front .
+        - docker build -t diomedex/sample-app-front .
         - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
         - docker push diomedex/sample-app-front
-        
+
     - stage: "Package"
       before script:
         - cd sample-application-backend
       script:
-        - docker build diomedex/sample-app-back .
+        - docker build -t diomedex/sample-app-back .
         - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
         - docker push diomedex/sample-app-back
 
