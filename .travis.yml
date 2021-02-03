@@ -20,9 +20,10 @@ jobs:
       before script:
         - cd sample-application-backend 
       script:
-        - mvn package
-        - mvn test -B
-        - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=adrienCrosio_sample-application-students
+        - mvn clean
+        - mvn verify
+        - mvn org.jacoco:jacoco-maven-plugin:prepare-agent
+        - mvn sonar:sonar -Dsonar.projectKey=adrienCrosio_sample-application-students
 
     - stage : "Build and Test"
       language: node.js
@@ -37,17 +38,17 @@ jobs:
       before script:
         - cd sample-application-frontend
       script:
-        - docker build -t diomedex/sample-app-front .
+        - docker build -t $DOCKER_USERNAME/sample-app-front .
         - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-        - docker push diomedex/sample-app-front
+        - docker push $DOCKER_USERNAME/sample-app-front
 
     - stage: "Package"
       before script:
         - cd sample-application-backend
       script:
-        - docker build -t diomedex/sample-app-back .
+        - docker build -t $DOCKER_USERNAME/sample-app-back .
         - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-        - docker push diomedex/sample-app-back
+        - docker push $DOCKER_USERNAME/sample-app-back
 
 services:
   - docker
