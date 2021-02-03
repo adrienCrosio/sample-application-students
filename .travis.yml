@@ -15,7 +15,7 @@ jobs:
       script:
         - mvn package
         - mvn test -B
-        - mvn clean verify org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=adrienCrosio
+        - mvn clean verify org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=adrienCrosio_sample-application-students
 
     - stage : "Build and Test"
       language: node.js
