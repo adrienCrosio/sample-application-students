@@ -1,18 +1,34 @@
 git:
   depth: 5
 
+stage:
+  - "Build and Test"
+  - "Package"
+
 jobs:
   include:
-    - stage : "Build and Test Java"
+    - stage : "Build and Test"
       language: Java
       jdk: oraclejdk11
       before script:
         - cd sample-application-backend 
-    - stage : "Build and Test Nodejs"
+      script:
+        - mvn package
+        - mvn test -B
+    - stage : "Build and Test"
       language: node.js
       node_js: "12.20"
+      -script:
+        - npm install
+        - npm run test
       before script:
         - cd sample-application-frontend 
+    - stage: "Package"
+
+      script:
+        - docker-compose build
+        - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+        - docker-compose push
 
 cache:
   directories:
