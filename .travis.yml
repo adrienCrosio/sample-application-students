@@ -1,9 +1,11 @@
 git:
   depth: 5
 
-stage:
-  - "Build and Test"
-  - "Package"
+stages:
+  - name: Build and Test
+    if: branch = master
+  - name: Package
+    if: branch = master
 
 addons:
   sonarcloud:
